@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { contact } from "../data/project";
 import Arrow from "./Arrow";
+import VisitorCount from "./VisitorCount";
 
 export default function Footer() {
   return (
@@ -47,6 +48,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
+      <VisitorCount />
     </footer>
   );
 }
