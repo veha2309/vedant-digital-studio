@@ -66,14 +66,20 @@ export default function RouteEffects() {
       (item) => location.pathname === `/projects/${item.slug}`,
     );
     const home = location.pathname === "/";
+    const work = location.pathname === "/work";
+    const feedback = location.pathname === "/feedback";
+    const quote = location.pathname === "/quote";
     const title = project
-      ? `${project.title} — Vedant Shukla`
+      ? `${project.title} — Vedant Digital Studio`
       : home
-        ? "Vedant Shukla — Software Engineer & Maker"
-        : location.pathname === "/admin" ? "Project enquiries — Vedant Shukla" : "Page not found — Vedant Shukla";
+        ? "Vedant Digital Studio — Websites, Web & Mobile Apps"
+        : work ? "The work — Vedant Digital Studio"
+          : feedback ? "Private feedback — Vedant Digital Studio"
+          : quote ? "Start a project — Vedant Digital Studio"
+          : location.pathname === "/admin" ? "Project enquiries — Vedant Digital Studio" : "Page not found — Vedant Digital Studio";
     const description =
       project?.description ??
-      "Thoughtful code. Remarkable experiences. Vedant Shukla is a software engineer building considered web and mobile products in New Delhi, India.";
+      (work ? "Explore independent products and website concepts from Vedant Digital Studio, with the thinking behind each experience." : "Vedant Digital Studio creates distinctive brand websites, web applications, and mobile experiences. Work directly with founder Vedant Shukla, from the first conversation to delivery.");
     document.title = title;
     const meta = (key: string, value: string) => {
       const attribute = key.startsWith("og:") ? "property" : "name";
@@ -91,7 +97,7 @@ export default function RouteEffects() {
     meta("og:title", title);
     meta("og:description", description);
     meta("og:url", `${window.location.origin}${location.pathname}`);
-    meta("robots", home || project ? "index, follow" : "noindex, follow");
+    meta("robots", home || work || project ? "index, follow" : "noindex, follow");
   }, [location.pathname]);
   return null;
 }

@@ -103,3 +103,23 @@ Validation: production build and lint passed; 31 browser tests passed, followed 
 Final production bundle: initial JavaScript 137.02 kB gzip; CSS 8.88 kB gzip. Lighthouse 13.5, local production preview, headless installed Chrome, default simulated mobile throttling: performance 96, accessibility 100, best practices 100, SEO 100; LCP 2.72 seconds, CLS 0, TBT 39 ms. LCP remains above the 2.5-second target; other requested numerical targets pass. These are lab results, not field measurements. Hero image preloading removed the LCP discovery warning. Scroll profile: p95 frame duration 17.5 ms, zero frames above 50 ms, zero long tasks, no runtime errors.
 
 No deployment or live Supabase configuration performed.
+
+## Reference-inspired opening — 2026-09-30
+
+Studied turismo.gov.st/fr and perappelgren.de visually, including their scroll transitions. Replaced repeated project pins with one desktop opening sequence: seven original portfolio visuals surround the central headline and move outward with shallow perspective on scroll. Project rows use continuous scale/text reveals. Mobile uses a centered headline and staggered two-image layout; reduced motion keeps all content in static document flow.
+
+Production build and lint pass. All 17 route/layout/keyboard/reduced-motion checks pass, including overflow at 360–1440 px. Initial JS is 137.22 kB gzip. Scroll profile before the final spacing correction: p95 17.3 ms, zero frames over 50 ms, zero long tasks, no runtime errors. Lighthouse was not rerun for this iteration. Latest visual: artifacts/reference-opening.png. No deployment.
+
+## Approved gallery / immersive-scenes blend — 2026-09-30
+
+Changed the opening to warm ivory with a central name and compact motto, surrounded by larger portfolio captures/illustrations. Engineering work now uses full-width scenes with image depth movement, readable title overlays and continuous transitions; mobile shows uncropped visuals. Project labels, normal Mahila Mitr ordering, contact flows and case routes remain available.
+
+Build and lint passed. All 17 portfolio checks passed before the final typography-only correction. Desktop/mobile screenshots reviewed and final opening saved in artifacts/blend-opening.png. Scroll profile: p95 17.3 ms, zero frames above 50 ms, no long tasks or runtime errors. Final JS 137.23 kB gzip. Lighthouse simulated mobile local lab: performance 95, accessibility/best practices/SEO 100, LCP 2.80 s, CLS 0, TBT 82 ms. LCP remains above the 2.5 s target. No deployment.
+
+## Fluid studio UI refactor — 2026-09-30
+
+Inspected Fly Crooked in the browser, including its staged scene/text reveal. Refactored the homepage opening to a typographic introduction with three layered work plates and a single scroll-controlled expansion. Replaced the scattered gallery with a unified forest/ivory/copper studio theme, full-width project chapters that preserve complete illustrations, coordinated title/image movement, and consistent rounded surfaces across website examples, quote flow, About, case studies, and contact. Removed the accumulated prior scroll/gallery overrides and isolated the new visual system in src/studio.css.
+
+Validation: build and lint pass. Thirty browser checks passed initially; the remaining reduced-motion test referenced removed heading classes and passed after updating it to the new title/copy, alongside the keyboard skip check. Quote submission/fallback, private feedback, admin, external/mail prompts, route reload/Back, and overflow at 360–1440 px passed. Desktop/mobile screenshots reviewed. Scroll profile: p95 17.2 ms; no long tasks, frames above 50 ms, or runtime errors.
+
+Final JS 137.05 kB gzip, CSS 10.08 kB gzip. Lighthouse 13.5 default simulated mobile lab: performance 95, accessibility/best practices/SEO 100; LCP 2.80 seconds, CLS 0, TBT 37.5 ms. LCP remains above 2.5 seconds. Prioritizing the actual mobile LCP image removed the request-discovery warning. No deployment or push performed.

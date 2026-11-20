@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom";
 import { contact } from "../data/project";
 import Arrow from "./Arrow";
+import VisitorCount from "./VisitorCount";
 
 export default function Footer() {
   return (
     <footer id="contact" className="contact container">
       <div className="contact-top">
-        <span className="eyebrow">04 / START A CONVERSATION</span>
+        <span className="eyebrow">VEDANT DIGITAL STUDIO / NEW DELHI</span>
         <span className="availability">
           <i />
-          Open to opportunities & collaborations
+          Independent design & development
         </span>
       </div>
       <a className="contact-title" href={`mailto:${contact.email}`}>
@@ -16,22 +18,25 @@ export default function Footer() {
         <Arrow />
       </a>
       <div className="contact-details">
+        <Link className="text-link" to="/quote">Request a quote <Arrow /></Link>
         <a href={`mailto:${contact.email}`}>
           {contact.email}
           <Arrow />
         </a>
         <p>
-          A new product, a good team, or an interesting idea.
+          Websites and digital products for your next chapter.
           <br />
-          I’d love to hear about it.
+          Led by Vedant Shukla. Built around your business.
         </p>
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Vedant Shukla</span>
+        <span>© {new Date().getFullYear()} Vedant Digital Studio</span>
         <span className="footer-note">
           Thoughtfully built. Always evolving.
         </span>
         <div>
+          <Link to="/work">All work <Arrow /></Link>
+          <Link to="/feedback">Private feedback</Link>
           <a href={contact.github} target="_blank" rel="noreferrer">
             GitHub <Arrow />
           </a>
@@ -43,6 +48,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
+      <VisitorCount />
     </footer>
   );
 }

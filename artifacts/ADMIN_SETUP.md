@@ -17,7 +17,7 @@ Until the settings are supplied, the API fails closed and the form offers an ema
 - The server checks authentication for every inbox read/update; hiding `/admin` is not the access control.
 - Signed sessions expire after eight hours and use HttpOnly, SameSite=Strict cookies (Secure in production).
 - Same-origin mutation checks, strict field validation, a honeypot and Postgres-backed 15-minute rate limits protect the new endpoints. Counters increment atomically through a server-only RPC. Expired buckets are removed on subsequent rate-limit calls.
-- All persisted data uses Supabase: `portfolio_inquiries`, `portfolio_rate_limits`, and `portfolio_feedback`. MongoDB connections, dependencies and keepalive jobs have been removed. Legacy public ratings and visitor endpoints return HTTP 410 and expose no data. No external database was deleted or migrated.
+- All persisted data uses Supabase. MongoDB connections, dependencies and keepalive jobs have been removed. Legacy public ratings return HTTP 410. To enable footer visit totals, also run `supabase/migrations/202611200001_visitor_counts.sql`. The studio visitor API serves both sites with separate aggregate totals and stores no visitor records.
 - Requests include name, reply email, project type, timeline and message. They are retained until managed in Supabase; there is no public request-list API. The Supabase service secret is only sent from Vercel to Supabase.
 
 Verification uses isolated repository doubles, mocked Supabase REST responses and browser fixtures. No migration or request was applied to your live project. Run a Supabase/Vercel smoke test after configuration: submit one enquiry, sign in, confirm its details and change its status.

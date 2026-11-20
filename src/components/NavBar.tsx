@@ -55,23 +55,24 @@ export default function NavBar() {
   }, [open]);
 
   const links = [
-    ["Work", "/#work"],
-    ["Web designs", "/#websites"],
-    ["About", "/#about"],
+    ["Services", "/#capabilities"],
+    ["Work", "/#websites"],
+    ["Process", "/#process"],
+    ["Studio", "/#about"],
     ["Contact", "/#contact"],
   ];
   return (
-    <header className="site-header">
+    <header className={`site-header${location.pathname === "/" ? " site-header--immersive" : ""}`}>
       <div className="nav-wrap container">
         <Link
           className="wordmark"
           to="/"
-          aria-label="Vedant Shukla — home"
+          aria-label="Vedant Digital Studio — home"
           onClick={() => setOpen(false)}
         >
           Vedant<span>.</span>
         </Link>
-        <span className="nav-caption">ENGINEER & MAKER</span>
+        <span className="nav-caption">DIGITAL STUDIO</span>
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([label, to]) => (
             <Link
@@ -86,8 +87,8 @@ export default function NavBar() {
               {label}
             </Link>
           ))}
-          <Link className="nav-contact" to="/#quote">
-            Get a quote <Arrow />
+          <Link className="nav-contact" to="/quote">
+            Start a project <Arrow />
           </Link>
         </nav>
         <button
@@ -126,7 +127,7 @@ export default function NavBar() {
           <p>
             NEW DELHI, INDIA
             <br />
-            WEB & MOBILE ENGINEERING
+            WEBSITES & DIGITAL PRODUCTS
           </p>
         </div>
       )}
