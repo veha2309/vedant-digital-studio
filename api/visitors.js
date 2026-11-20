@@ -1,3 +1,5 @@
+import { createHmac } from 'node:crypto';
+import { isIP } from 'node:net';
 import { supabaseRequest } from './_supabase.js';
 
 const portfolioOrigins = new Set([
@@ -25,12 +27,20 @@ export default async function handler(req, res) {
   if (req.method === 'POST' && !isPortfolio && !isStudio) return res.status(403).end();
 
   try {
-    const { data } = req.method === 'POST'
-      ? await supabaseRequest('rpc/portfolio_record_visit', {
-        method: 'POST', body: JSON.stringify({ site_key: site }),
-      })
-      : await supabaseRequest(`portfolio_visitor_counts?site=eq.${site}&select=count`);
-    return res.status(200).json({ count: req.method === 'POST' ? data : data[0]?.count ?? 0 });
+    const address = req.headers['x-vercel-forwarded-for'];
+    const ipVersion = typeof address === 'string' ? isIP(address) : 0;
+    const secret = process.env.VISITOR_HASH_SECRET || process.env.ADMIN_SESSION_SECRET;
+    if (req.method === 'POST' && ipVersion && secret) {
+      const ip = ipVersion === 6 ? new URL(`http://[${address}]`).hostname : address;
+      const visitorHash = createHmac('sha256', secret)
+        .update(`portfolio-visitor:v1:${site}:${ip}`).digest('hex');
+      const { data } = await supabaseRequest('rpc/portfolio_record_traffic', {
+        method: 'POST', body: JSON.stringify({ site_key: site, visitor_hash: visitorHash }),
+      });
+      return res.status(200).json(data[0]);
+    }
+    const { data } = await supabaseRequest(`portfolio_visitor_counts?site=eq.${site}&select=count,unique_visitors`);
+    return res.status(200).json({ visitors: data[0]?.unique_visitors ?? 0, visits: data[0]?.count ?? 0 });
   } catch {
     return res.status(503).end();
   }
